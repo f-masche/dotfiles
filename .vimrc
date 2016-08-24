@@ -1,28 +1,37 @@
+
 set nocompatible              " be iMproved, required
 filetype off                  " required
-set rtp+=~/.vim/bundle/Vundle.vim " set the runtime path to include Vundle and initialize
 call plug#begin()
-" show indentation guides
 
-Plug 'nathanaelkane/vim-indent-guides' 
+" Snippets
+Plug 'SirVer/ultisnips'
+
+" Tmux pane switching
+Plug 'christoomey/vim-tmux-navigator'
+
+" Show indentation guides
+Plug 'nathanaelkane/vim-indent-guides'
 let g:indent_guides_enable_on_vim_startup=1 " enable indentation guides on startup
 let g:indent_guides_auto_colors=0 " disable autodiscovery of guide colors to fix colorscheme definition
 
-Plug 'scrooloose/nerdtree'
-let NERDTreeShowHidden=1 " Show hidden files
-
-" auto close brackets and quotes
+" Auto close brackets and quotes
 Plug 'Raimondi/delimitMate'
 let delimitMate_expand_cr=1 " autoexpand carriage return
 
-" airline
+" Fuzzy file search
+Plug 'kien/ctrlp.vim'
+
+" Airline
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
-" emmet 
+" Emmet
 Plug 'mattn/emmet-vim'
 
-Plug 'scrooloose/syntastic'
+" Vim surround 
+Plug 'tpope/vim-surround'
+
+" Plug 'scrooloose/syntastic'
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
@@ -33,36 +42,38 @@ let g:syntastic_check_on_wq = 0 " don't check on :wq
 let g:syntastic_javascript_checkers = ['jscs'] " use jscs as javascript linter
 let g:syntastic_loc_list_height=5
 
-" language support
-Plug 'jelera/vim-javascript-syntax'
+" Autocomplete
+Plug 'valloric/youcompleteme', { 'do': './install.py' } 
 
-Plug 'elmcast/elm-vim'
-let g:elm_syntastic_show_warnings = 1
+" Languages 
 
+" Javascript
 Plug 'pangloss/vim-javascript' " extended javascript support
 let javascript_enable_domhtmlcss=1 " enable HTML/CSS syntax highlighting
 
-" neomake task runner
-" Plug 'neomake/neomake'
-" let g:neomake_open_list = 2
+Plug 'jelera/vim-javascript-syntax'
 
-" color schemes
-Plug 'morhetz/gruvbox'
-Plug 'sickill/vim-monokai'
+Plug 'isRuslan/vim-es6'
 
-call plug#end()            
+" Elm
+Plug 'elmcast/elm-vim'
+let g:elm_syntastic_show_warnings = 1
+
+" Color scheme
+Plug 'crusoexia/vim-dracula'
+let g:dracula_italic = 1
+
+call plug#end()
 filetype plugin indent on  " required
-
+colorscheme dracula " Theme
+set background=dark
 syntax on
-colorscheme gruvbox " Theme
-set background=dark " setting dark mode
 set number " show line numbers
-set wildmenu " use completion menu 
+set wildmenu " use completion menu
 set nocompatible " vim only
 set nomodeline " no modelines
 set encoding=utf-8 " default encoding
 set fileencoding=utf-8 " encode files in utf8
-set t_Co=256 " 256 colors
 set backspace=indent,eol,start " backspace moves accross these
 set undolevels=1000 " keep 1000 actions in undo history
 set history=1000 " keep 1000 lines of command line history
@@ -96,7 +107,10 @@ if has('mouse')
   set mouse=a
 endif
 
-" autocmd! BufWritePost,BufEnter * Neomake
+if has("nvim")
+  let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+  set termguicolors
+endif 
 
 let mapleader=' '
 
