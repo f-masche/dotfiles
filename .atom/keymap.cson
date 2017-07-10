@@ -1,0 +1,61 @@
+# Your keymap
+#
+# Atom keymaps work similarly to style sheets. Just as style sheets use
+# selectors to apply styles to elements, Atom keymaps use selectors to associate
+# keystrokes with events in specific contexts. Unlike style sheets however,
+# each selector can only be declared once.
+#
+# You can create a new keybinding in this file by typing "key" and then hitting
+# tab.
+#
+# Here's an example taken from Atom's built-in keymap:
+#
+# 'atom-text-editor':
+#   'enter': 'editor:newline'
+#
+# 'atom-workspace':
+#   'ctrl-shift-p': 'core:move-up'
+#   'ctrl-p': 'core:move-down'
+#
+# You can find more information about keymaps in these guides:
+# * https://atom.io/docs/latest/using-atom-basic-customization#customizing-key-bindings
+# * https://atom.io/docs/latest/behind-atom-keymaps-in-depth
+#
+# This file uses CoffeeScript Object Notation (CSON).
+# If you are unfamiliar with CSON, you can read more about it in the
+# Atom Flight Manual:
+# https://atom.io/docs/latest/using-atom-basic-customization#cson
+
+# vim-mode-plus
+# remap movement keys
+'atom-text-editor.vim-mode-plus:not(.insert-mode)':
+  'h': 'unset!'
+  'ö': 'vim-mode-plus:move-right'
+  'l': 'vim-mode-plus:move-left'
+
+# vim-mode-plus-surround
+# normal
+'atom-text-editor.vim-mode-plus.normal-mode':
+  # surround e.g. y s i w (
+  'y s': 'vim-mode-plus:surround'
+
+  # delete-surround-any-pair. auto-detect surrounding char. e.g. d s
+  'd s': 'vim-mode-plus:delete-surround-any-pair'
+
+  # delete-surround e.g. d s (
+  'd S': 'vim-mode-plus:delete-surround'
+
+  # change-surround-any-pair. auto-detect surrounding char. e.g. c s {
+  'c s': 'vim-mode-plus:change-surround-any-pair'
+
+  # change-surround. auto-detect e.g. c s ( {
+  'c S': 'vim-mode-plus:change-surround'
+
+# operator-pending only when surround-pending
+'atom-text-editor.vim-mode-plus.operator-pending-mode.surround-pending':
+  's': 'vim-mode-plus:inner-current-line'
+
+# visual
+'atom-text-editor.vim-mode-plus.visual-mode:not(.insert-mode)':
+  # surround selected text. S (
+  'S': 'vim-mode-plus:surround'
