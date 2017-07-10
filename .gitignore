@@ -1,0 +1,5 @@
+*
+!.gitignore
+!.atom/init.coffee
+!.atom/keymap.cson
+!.atom/snippets.cson
