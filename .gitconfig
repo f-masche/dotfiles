@@ -1,10 +1,6 @@
 [user]
 	name = Fabian Maschewski
-	email = f.maschewski@mail.de
-[user]
-  name = Ilker Cetinkaya
-  email = ilker.cetinkaya@check24.de
-
+	email = fmasche@github.com
 [alias]
     st = status
     s = status -sb
