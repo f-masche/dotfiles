@@ -1,0 +1,61 @@
+[user]
+	name = Fabian Maschewski
+	email = f.maschewski@mail.de
+[user]
+  name = Ilker Cetinkaya
+  email = ilker.cetinkaya@check24.de
+
+[alias]
+    st = status
+    s = status -sb
+  
+    co = checkout
+    cb = checkout -b
+    c = commit
+    x = commit -m
+    xa = commit -am
+    a = add
+    aa = add -A
+  
+    l = "!f() { n=10; [ -n \"$1\" ] && n=$1; git log --oneline --graph -$n; }; f"
+    ls = "!f() { n=10; [ -n \"$1\" ] && n=$1; git log --oneline --graph --stat -$n; }; f"
+    ls1 = log --oneline --stat -1
+  
+    b = branch
+    cb = checkout -b
+    db = branch -D
+  
+    f = fetch
+    fp = fetch -p
+  
+    g = "!f() { git log --oneline --graph --grep=$1; }; f"
+    gs = "!f() { git grep --heading --color -I -n -e $1; }; f"
+    gf = "!f() { git log --oneline --graph -- $1; }; f"
+  
+    p = pull
+    ps = push
+  
+    pr = "!f() { git request-pull $2 $(git config --get remote.$1.url); }; f"
+[color]
+    branch = auto
+    diff = auto
+    status = auto
+	ui = true
+[color "branch"]
+    current = yellow reverse
+    local = yellow
+    remote = green
+[color "diff"]
+    meta = yellow bold
+    frag = magenta bold
+    old = red bold
+    new = green bold
+[color "status"]
+    added = yellow
+    changed = green
+    untracked = cyan
+[core]
+	excludesfile = /Users/Fabian/.gitexcludes
+	editor = atom
+[push]
+	default = simple
