@@ -28,6 +28,9 @@ let g:ctrlp_user_command = {
 \ 'fallback': 'find %s -type f'
 \ }
 
+" Ack search
+Plug 'mileszs/ack.vim'
+
 " Airline
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -174,6 +177,8 @@ vnoremap ∆ :m '>+1<CR>gv=gv
 
 " Remove highlighing after search
 nnoremap <silent> <esc> :noh<return><esc>
+
+nnoremap <C-l> :CtrlPLine<CR>
 
 " UltiSnips completion function that tries to expand a snippet. If there's no
 " snippet for expanding, it checks for completion window and if it's
