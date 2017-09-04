@@ -3,13 +3,21 @@ filetype off " required
 
 call plug#begin()
 
+" Supertab
+Plug 'ervandew/supertab'
+
 " Autocomplete
 Plug 'valloric/youcompleteme', { 'do': './install.py --tern-completer --gocode-completer' } 
+let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+let g:SuperTabDefaultCompletionType = '<C-n>'
 
 " Snippets
 Plug 'SirVer/ultisnips'
 let g:UltiSnipsSnippetsDir="~/.vim/UltiSnips"
-let g:UltiSnipsExpandTrigger = "<nop>"
+let g:UltiSnipsExpandTrigger = "<cr>"
+let g:UltiSnipsJumpForwardTrigger = 'c-j'
+let g:UltiSnipsJumpBackwardTrigger = 'c-k'
 
 " Show indentation guides
 Plug 'nathanaelkane/vim-indent-guides'
@@ -178,28 +186,8 @@ vnoremap ∆ :m '>+1<CR>gv=gv
 " Remove highlighing after search
 nnoremap <silent> <esc> :noh<return><esc>
 
+" Search for line
 nnoremap <C-l> :CtrlPLine<CR>
-
-" UltiSnips completion function that tries to expand a snippet. If there's no
-" snippet for expanding, it checks for completion window and if it's
-" shown, selects first element. If there's no completion window it tries to
-" jump to next placeholder. If there's no placeholder it just returns TAB key 
-function! g:UltiSnips_Complete()
-  call UltiSnips_ExpandSnippet()
-  if g:ulti_expand_res == 0
-      if pumvisible()
-          return "\<C-n>"
-      else
-          call UltiSnips_JumpForwards()
-          if g:ulti_jump_forwards_res == 0
-             return "\<TAB>"
-          endif
-      endif
-  endif
-  return ""
-endfunction
-
-inoremap <expr> <CR> pumvisible() ? "<C-R>=UltiSnips#ExpandSnippetOrJump()<CR>" : "\<CR>"
 
 " Show cursorline only in active window
 augroup CursorLine
