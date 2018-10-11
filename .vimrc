@@ -3,22 +3,6 @@ filetype off " required
 
 call plug#begin()
 
-" Supertab
-Plug 'ervandew/supertab'
-
-" Autocomplete
-Plug 'valloric/youcompleteme', { 'do': './install.py --tern-completer --gocode-completer' } 
-let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
-let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
-let g:SuperTabDefaultCompletionType = '<C-n>'
-
-" Snippets
-Plug 'SirVer/ultisnips'
-let g:UltiSnipsSnippetsDir="~/.vim/UltiSnips"
-let g:UltiSnipsExpandTrigger = "<cr>"
-let g:UltiSnipsJumpForwardTrigger = 'c-j'
-let g:UltiSnipsJumpBackwardTrigger = 'c-k'
-
 " Show indentation guides
 Plug 'nathanaelkane/vim-indent-guides'
 let g:indent_guides_enable_on_vim_startup=1 " enable indentation guides on startup
@@ -45,9 +29,6 @@ Plug 'vim-airline/vim-airline-themes'
 let g:airline#extensions#tabline#enabled = 1 " Enable the list of buffers
 let g:airline#extensions#tabline#fnamemod = ':t' " Show just the filename
 
-" Emmet
-Plug 'mattn/emmet-vim'
-
 " NERD Tree
 Plug 'scrooloose/nerdtree'
 let NERDTreeWinSize=32
@@ -63,10 +44,8 @@ let g:syntastic_check_on_wq = 0
 let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_always_populate_loc_list = 1
 
-" Vim surround 
+" Vim surround
 Plug 'tpope/vim-surround'
-
-" Languages 
 
 " Javascript
 Plug 'pangloss/vim-javascript' " extended javascript support
@@ -75,10 +54,6 @@ let javascript_enable_domhtmlcss=1 " enable HTML/CSS syntax highlighting
 Plug 'jelera/vim-javascript-syntax'
 
 Plug 'isRuslan/vim-es6'
-
-" Elm
-Plug 'elmcast/elm-vim'
-let g:elm_syntastic_show_warnings = 1
 
 " Color scheme
 Plug 'dracula/vim'
@@ -120,7 +95,7 @@ set ruler " show the line and column number of the cursor position
 set showcmd " show partial command in the last line of the screen
 set showmode " show the mode we're in
 set laststatus=2 " always show a status line on the last window
-set clipboard=unnamedplus " use system clipboard
+set clipboard=unnamed " use system clipboard
 set wildignore+=*/node_modules/*,*/bower_components/*
 set hlsearch " highlight search results
 set pumheight=5 " set height of popup
@@ -135,13 +110,13 @@ endif
 if has("nvim")
   let $NVIM_TUI_ENABLE_TRUE_COLOR=1
   set termguicolors
-endif 
+endif
 
 let mapleader=' '
 
 " Split and window movements
-:nnoremap <leader>s :vsplit<CR> 
-:nnoremap <leader>i :split<CR> 
+:nnoremap <leader>s :vsplit<CR>
+:nnoremap <leader>i :split<CR>
 :nnoremap <leader>j :wincmd j<CR>
 :nnoremap <leader>k :wincmd k<CR>
 :nnoremap <leader>h :wincmd h<CR>
@@ -149,10 +124,7 @@ let mapleader=' '
 :nnoremap <leader>b :w<CR>:bn<CR>
 :nnoremap <leader>p :w<CR>:bp<CR>
 
-" Remove highlighting on ESC in normal mode
-:nnoremap <silent><ESC> :noh<CR><ESC>
-
-map <C-n> :NERDTreeToggle<CR>
+map <C-\> :NERDTreeToggle<CR>
 
 " Use CTRL-S for saving, also in Insert mode
 noremap <C-S> :update<CR>
@@ -168,23 +140,8 @@ inoremap <S-Tab> <C-D>
 vnoremap <Tab> >gv
 vnoremap <S-Tab> <gv
 
-" Move lines  up and down
-nnoremap <A-j> :m .+1<CR>==
-nnoremap <A-k> :m .-2<CR>==
-inoremap <A-j> <Esc>:m .+1<CR>==gi
-inoremap <A-k> <Esc>:m .-2<CR>==gi
-vnoremap <A-j> :m '>+1<CR>gv=gv
-vnoremap <A-k> :m '<-2<CR>gv=gv
-" for mac
-vnoremap ˚ :m '<-2<CR>gv=gv
-nnoremap ∆ :m .+1<CR>==
-nnoremap ˚ :m .-2<CR>==
-inoremap ∆ <Esc>:m .+1<CR>==gi
-inoremap ˚ <Esc>:m .-2<CR>==gi
-vnoremap ∆ :m '>+1<CR>gv=gv
-
 " Remove highlighing after search
-nnoremap <silent> <esc> :noh<return><esc>
+" nnoremap <esc> :noh<return><esc>
 
 " Search for line
 nnoremap <C-l> :CtrlPLine<CR>

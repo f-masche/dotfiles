@@ -1,9 +1,1 @@
-*
-!.atom/init.coffee
-!.atom/keymap.coffee
-!.atom/snippets.cson
-!.vim/UltiSnips
-!.gitignore
-!.vimrc
-!.gitconfig
 

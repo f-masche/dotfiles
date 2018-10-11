@@ -4,33 +4,34 @@
 [alias]
     st = status
     s = status -sb
-  
+
     co = checkout
     cb = checkout -b
     c = commit
     x = commit -m
-    xa = commit -am
+    xa = commit -a
+    xam = commit -am
     a = add
     aa = add -A
-  
+
     l = "!f() { n=10; [ -n \"$1\" ] && n=$1; git log --oneline --graph -$n; }; f"
     ls = "!f() { n=10; [ -n \"$1\" ] && n=$1; git log --oneline --graph --stat -$n; }; f"
     ls1 = log --oneline --stat -1
-  
+
     b = branch
     cb = checkout -b
     db = branch -D
-  
+
     f = fetch
     fp = fetch -p
-  
+
     g = "!f() { git log --oneline --graph --grep=$1; }; f"
     gs = "!f() { git grep --heading --color -I -n -e $1; }; f"
     gf = "!f() { git log --oneline --graph -- $1; }; f"
-  
+
     p = pull
     ps = push
-  
+
     pr = "!f() { git request-pull $2 $(git config --get remote.$1.url); }; f"
 [color]
     branch = auto
