@@ -42,7 +42,6 @@ CASKS=(
   spotify
   tower
   virtualbox
-  bear
 )
 
 brew cask install ${CASKS[@]}
@@ -64,8 +63,9 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/mas
 
 echo "Installing App Store Apps"
 read -p "Enter Apple ID email: " appleEmail
-mas signin $appleEmail
+mas signin --dialog $appleEmail
 mas lucky xcode
+mas lucky bear
 
 echo "Installing global npm packages..."
 npm install gulp -g
