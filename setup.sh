@@ -4,8 +4,8 @@ echo "Starting bootstrapping"
 sudo -v
 
 if test ! $(which brew); then
-    echo "Installing homebrew..."
-    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  echo "Installing homebrew..."
+  ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 fi
 
 PACKAGES=(
@@ -42,10 +42,10 @@ CASKS=(
   spotify
   tower
   virtualbox
+  bear
 )
 
 brew cask install ${CASKS[@]}
-
 
 echo "Installing fonts..."
 FONTS=(
@@ -63,7 +63,8 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/mas
 
 
 echo "Installing App Store Apps"
-mas signin fabian.maschewski@kaiser-x.com
+read -p "Enter Apple ID email: " appleEmail
+mas signin $appleEmail
 mas lucky xcode
 
 echo "Installing global npm packages..."
@@ -74,5 +75,21 @@ defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
 
 # Show the ~/Library folder
 chflags nohidden ~/Library
+
+# Linking config
+CONFIG_FILES=(
+  .zshrc
+  .gitconfig
+  .vimrc
+  .vim
+)
+
+echo "Linking config..."
+for file in "${CONFIG_FILES[@]}"
+do
+  if ! [ -f "${HOME}/${file}" ]; then
+    ln -s $PWD/$file $HOME/$file
+  fi
+done
 
 echo "Bootstrapping complete"
