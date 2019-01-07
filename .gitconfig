@@ -53,6 +53,6 @@
     untracked = cyan
 [core]
 	excludesfile = /Users/Fabian/.gitexcludes
-	editor = atom
+	editor = nvim
 [push]
 	default = simple

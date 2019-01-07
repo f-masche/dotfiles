@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/user/.oh-my-zsh"
+export ZSH="/Users/${USER}/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -77,7 +77,7 @@ source $ZSH/oh-my-zsh.sh
 
 # Preferred editor for local and remote sessions
 # if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
+export EDITOR='nvim'
 # else
 #   export EDITOR='mvim'
 # fi
@@ -114,7 +114,7 @@ export NVM_DIR="$HOME/.nvm"
 export PATH=$PATH:/Applications/Sketch.app/Contents/Resources/sketchtool/bin/sketchtool:/Applications/Sketch.app/Contents/Resources/sketchtool/bin/:/Applications/Sketch.app/Contents/Resources/sketchtool/bin/
 
 
-local newline=$'\n'
-local ret_status="%(?:%{$fg_bold[green]%}λ :%{$fg_bold[red]%}λ )"
+# local newline=$'\n'
+# local ret_status="%(?:%{$fg_bold[green]%}λ :%{$fg_bold[red]%}λ )"
 
 export PS1="%{$fg[cyan]%}%c%{$reset_color%} $(git_prompt_info)${newline}%{$fg[red]%}${ret_status}%{$reset_color%} "
