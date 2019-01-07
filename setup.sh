@@ -58,6 +58,18 @@ brew cask install ${FONTS[@]}
 # final brew upgrade
 brew upgrade
 
+echo "Installing atom packages..."
+ATOM_PACKAGES=(
+  vim-mode-plus
+  atom-beautify
+  atom-typescript
+  linter-tslint
+  linter
+  pigments
+)
+
+apm install ${CASKS[@]}
+
 echo "Installing oh-my-zsh..."
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 

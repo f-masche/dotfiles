@@ -11,18 +11,12 @@ let g:indent_guides_auto_colors=0 " disable autodiscovery of guide colors to fix
 " Auto close brackets and quotes
 Plug 'jiangmiao/auto-pairs'
 
-" Fuzzy file search
-Plug 'kien/ctrlp.vim'
-let g:ctrlp_user_command = {
-\ 'types': {
-  \  1: ['.git', 'cd %s && git ls-files']
-\ },
-\ 'fallback': 'find %s -type f'
-\ }
+" Git
+Plug 'tpope/vim-fugitive'
 
-" Ack search
-Plug 'mileszs/ack.vim'
-
+" FZF fuzzy file search
+Plug '/usr/local/opt/fzf'
+Plug 'junegunn/fzf.vim'
 " Airline
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -54,6 +48,23 @@ let javascript_enable_domhtmlcss=1 " enable HTML/CSS syntax highlighting
 Plug 'jelera/vim-javascript-syntax'
 
 Plug 'isRuslan/vim-es6'
+
+Plug 'leafgarland/typescript-vim'
+
+" Plug 'Quramy/tsuquyomi'
+
+" Typescript syntax
+Plug 'HerringtonDarkholme/yats.vim'
+
+Plug 'mhartington/nvim-typescript', {'build': './install.sh'}
+
+" For async completion
+Plug 'Shougo/deoplete.nvim'
+
+" Plug 'mhartington/deoplete-typescript'
+
+" For Denite features
+" Plug 'Shougo/denite.nvim'
 
 " Color scheme
 Plug 'dracula/vim'
@@ -114,6 +125,13 @@ endif
 
 let mapleader=' '
 
+let g:deoplete#enable_at_startup = 1
+
+" Auto cd into root directory of NERDTree
+let NERDTreeChDirMode = 2
+let NERDTreeMarkBookmarks = 0
+let NERDTreeMinimalUI = 1
+
 " Split and window movements
 :nnoremap <leader>s :vsplit<CR>
 :nnoremap <leader>i :split<CR>
@@ -154,3 +172,14 @@ augroup CursorLine
   au BufWinEnter * setlocal cursorline
   au WinLeave * setlocal nocursorline
 augroup END
+
+nnoremap tk  :tabnext<CR>
+nnoremap tj  :tabprev<CR>
+
+noremap <C-p> :GFiles .<CR>
+noremap <C-b> :Buffers .<CR>
+
+noremap <C-_> :NERDTreeToggle<CR>
+
+command! -bang -nargs=? -complete=dir GFiles
+  \ call fzf#vim#gitfiles(<q-args>, fzf#vim#with_preview(), <bang>0)
