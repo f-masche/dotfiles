@@ -27,16 +27,17 @@ let g:airline#extensions#tabline#fnamemod = ':t' " Show just the filename
 Plug 'scrooloose/nerdtree'
 let NERDTreeWinSize=32
 
-" Syntastic
-Plug 'vim-syntastic/syntastic'
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+" Linting
+Plug 'w0rp/ale'
+let g:ale_linters = {
+\   'javascript': ['eslint'],
+\   'typescript': ['tslint'],
+\}
+let g:airline#extensions#ale#enables = 1
+let g:ale_lint_delay = 500
 
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_javascript_checkers = ['eslint']
-let g:syntastic_always_populate_loc_list = 1
+" Only run linters named in ale_linters settings.
+let g:ale_linters_explicit = 1
 
 " Vim surround
 Plug 'tpope/vim-surround'
@@ -69,6 +70,10 @@ Plug 'Shougo/deoplete.nvim'
 " Color scheme
 Plug 'dracula/vim'
 let g:dracula_italic = 1
+
+" Dev icons
+Plug 'ryanoasis/vim-devicons'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 
 call plug#end()
 filetype plugin indent on  " required
@@ -133,14 +138,14 @@ let NERDTreeMarkBookmarks = 0
 let NERDTreeMinimalUI = 1
 
 " Split and window movements
-:nnoremap <leader>s :vsplit<CR>
+:nnoremap <leader>v :vsplit<CR>
 :nnoremap <leader>i :split<CR>
 :nnoremap <leader>j :wincmd j<CR>
 :nnoremap <leader>k :wincmd k<CR>
 :nnoremap <leader>h :wincmd h<CR>
 :nnoremap <leader>l :wincmd l<CR>
-:nnoremap <leader>b :w<CR>:bn<CR>
-:nnoremap <leader>p :w<CR>:bp<CR>
+" last used buffer
+nnoremap <leader>p :w<CR>:b #<CR>
 
 map <C-\> :NERDTreeToggle<CR>
 
@@ -151,7 +156,7 @@ inoremap <C-S> <C-O>:update<CR><Paste>
 
 " Keep selection when changing indentation
 vnoremap > >gv
-vnoremap < <gv
+vnoremap < <
 noremap <Tab> >>_
 nnoremap <S-Tab> <<_
 inoremap <S-Tab> <C-D>
@@ -159,7 +164,7 @@ vnoremap <Tab> >gv
 vnoremap <S-Tab> <gv
 
 " Remove highlighing after search
-" nnoremap <esc> :noh<return><esc>
+ nnoremap <esc> :noh<return><esc>
 
 " Search for line
 nnoremap <C-l> :CtrlPLine<CR>
@@ -173,13 +178,32 @@ augroup CursorLine
   au WinLeave * setlocal nocursorline
 augroup END
 
+" switch tabs
 nnoremap tk  :tabnext<CR>
 nnoremap tj  :tabprev<CR>
 
-noremap <C-p> :GFiles .<CR>
-noremap <C-b> :Buffers .<CR>
+" switch buffers
+" fuzzy search buffer
+" nnoremap  b :Buffers<CR>
 
 noremap <C-_> :NERDTreeToggle<CR>
 
 command! -bang -nargs=? -complete=dir GFiles
   \ call fzf#vim#gitfiles(<q-args>, fzf#vim#with_preview(), <bang>0)
+
+" Do not open ctrl p buffer in nerd tree
+function! CtrlPCommand()
+    let c = 0
+    let wincount = winnr('$')
+    " Don't open it here if current buffer is not writable (e.g. NERDTree)
+    while !empty(getbufvar(+expand("<abuf>"), "&buftype")) && c < wincount
+        exec 'wincmd w'
+        let c = c + 1
+    endwhile
+    exec 'GFiles'
+endfunction
+
+noremap <C-p> :call CtrlPCommand() <CR>
+
+" Search selected text
+vnoremap // y/<C-R>"<CR>

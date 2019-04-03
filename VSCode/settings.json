@@ -1,0 +1,31 @@
+{
+  "workbench.colorTheme": "Panda Syntax",
+  "editor.fontFamily": "Dejavu Sans Mono",
+  "editor.fontSize": 16,
+  "editor.minimap.maxColumn": 80,
+  "workbench.activityBar.visible": false,
+  "vim.useSystemClipboard": true,
+  "workbench.iconTheme": null,
+  "workbench.startupEditor": "none",
+  "editor.tabSize": 2,
+  "editor.useTabStops": false,
+  "window.zoomLevel": 0,
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "workbench.editor.showTabs": false,
+  "editor.wordWrap": "on",
+  "editor.minimap.renderCharacters": false,
+  "files.trimTrailingWhitespace": true,
+  "files.trimFinalNewlines": true,
+  "git.autofetch": true,
+  "editor.formatOnSave": true,
+  "explorer.openEditors.visible": 0,
+  "vim.insertModeKeyBindingsNonRecursive": [
+    {
+        "before": [ "<C-s>" ],
+        "commands": [
+            { "command": "workbench.action.files.save" },
+            { "command": "extension.vim_escape" }
+        ]
+    }
+  ]
+}

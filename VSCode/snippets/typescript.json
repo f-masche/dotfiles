@@ -1,0 +1,38 @@
+{
+	"describe": {
+		"prefix": "desc",
+		"body": [
+			"describe('$1', () => {",
+			"  $2",
+			"});"
+		],
+		"description": "jasmine describe block"
+	},
+	"it": {
+		"prefix": "it",
+		"body": [
+			"it('$1', () => {",
+			"  $2",
+			"});"
+		],
+		"description": "jasmine it block"
+	},
+	"beforeEach": {
+		"prefix": "be",
+		"body": [
+			"beforeEach(() => {",
+			"  $1",
+			"});"
+		],
+		"description": "jasmine beforeEach block"
+	},
+	"afterEach": {
+		"prefix": "ae",
+		"body": [
+			"afterEach(() => {",
+			"  $1",
+			"});"
+		],
+		"description": "jasmine afterEach block"
+	}
+}
