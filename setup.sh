@@ -31,8 +31,12 @@ readonly HOMEBREW_CASKS=(
 )
 
 readonly NPM_PACKAGES=(
-  gulp
   yarn
+  lerna
+  gulp-cli
+  tslint
+  typescript
+  @angular/cli
 )
 
 readonly CONFIG_FILES=(
