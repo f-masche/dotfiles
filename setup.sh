@@ -161,6 +161,11 @@ function configure_vscode {
   done
 }
 
+function install_fzf {
+  echo "Installing fzf..."
+  $(brew --prefix)/opt/fzf/install
+}
+
 echo "Starting bootstrapping"
 
 sudo -v
@@ -171,6 +176,7 @@ install_bat_theme
 install_oh_my_zsh
 install_vim_plug
 install_global_npm
+install_fzf
 configure_system
 link_config_files
 configure_vscode
