@@ -4,28 +4,35 @@
   "editor.fontSize": 16,
   "editor.minimap.maxColumn": 80,
   "workbench.activityBar.visible": false,
-  "vim.useSystemClipboard": true,
   "workbench.iconTheme": null,
   "workbench.startupEditor": "none",
   "editor.tabSize": 2,
   "editor.useTabStops": false,
   "window.zoomLevel": 0,
   "typescript.updateImportsOnFileMove.enabled": "always",
-  "workbench.editor.showTabs": false,
   "editor.wordWrap": "on",
   "editor.minimap.renderCharacters": false,
   "files.trimTrailingWhitespace": true,
   "files.trimFinalNewlines": true,
   "git.autofetch": true,
-  "editor.formatOnSave": true,
   "explorer.openEditors.visible": 0,
-  "vim.insertModeKeyBindingsNonRecursive": [
-    {
-        "before": [ "<C-s>" ],
-        "commands": [
-            { "command": "workbench.action.files.save" },
-            { "command": "extension.vim_escape" }
-        ]
-    }
-  ]
+  "breadcrumbs.enabled": true,
+  "editor.minimap.enabled": false,
+  "html.format.wrapLineLength": 80,
+  "files.insertFinalNewline": true,
+  "search.showLineNumbers": true,
+  "editor.formatOnPaste": true,
+  "diffEditor.ignoreTrimWhitespace": true,
+  "workbench.editor.showTabs": true,
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "html.mirrorCursorOnMatchingTag": false,
+  "problems.showCurrentInStatus": true,
+  "editor.formatOnSave": true,
+  "editor.suggestSelection": "first",
+  "todo-tree.tree.showScanModeButton": false,
+  "npm.autoDetect": "off",
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "explorer.autoReveal": "focusNoScroll"
 }

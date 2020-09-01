@@ -11,30 +11,70 @@ let g:indent_guides_auto_colors=0 " disable autodiscovery of guide colors to fix
 " Auto close brackets and quotes
 Plug 'jiangmiao/auto-pairs'
 
+" Ack search
+Plug 'mileszs/ack.vim'
+
 " Git
 Plug 'tpope/vim-fugitive'
+
+" Nerd commenter
+Plug 'scrooloose/nerdcommenter'
 
 " FZF fuzzy file search
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
+
 " Airline
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 let g:airline#extensions#tabline#enabled = 1 " Enable the list of buffers
 let g:airline#extensions#tabline#fnamemod = ':t' " Show just the filename
 
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+" Prettier code formatting
+Plug 'prettier/vim-prettier', {
+  \ 'do': 'yarn install',
+  \ 'branch': 'release/1.x',
+  \ 'for': [
+    \ 'javascript',
+    \ 'typescript',
+    \ 'css',
+    \ 'less',
+    \ 'scss',
+    \ 'json',
+    \ 'graphql',
+    \ 'markdown',
+    \ 'vue',
+    \ 'lua',
+    \ 'php',
+    \ 'python',
+    \ 'ruby',
+    \ 'html',
+    \ 'swift' ] }
+let g:prettier#exec_cmd_async = 1
+let g:prettier#autoformat = 1
+let g:prettier#autoformat_require_pragma = 0
+let g:prettier#config#single_quote = 'true'
+let g:prettier#config#bracket_spacing = 'false'
+let g:prettier#config#jsx_bracket_same_line = 'true'
+let g:prettier#config#arrow_parens = 'avoid'
+let g:prettier#config#trailing_comma = 'all'
+let g:prettier#config#config_precedence = 'prefer-file'
+let g:prettier#config#prose_wrap = 'preserve'
+
 " NERD Tree
 Plug 'scrooloose/nerdtree'
 let NERDTreeWinSize=32
 
 " Linting
-Plug 'w0rp/ale'
-let g:ale_linters = {
-\   'javascript': ['eslint'],
-\   'typescript': ['tslint'],
-\}
-let g:airline#extensions#ale#enables = 1
-let g:ale_lint_delay = 500
+" Plug 'w0rp/ale'
+" let g:ale_linters = {
+" \   'javascript': ['eslint'],
+" \   'typescript': ['tslint'],
+" \}
+" let g:airline#extensions#ale#enables = 1
+" let g:ale_lint_delay = 500
 
 " Only run linters named in ale_linters settings.
 let g:ale_linters_explicit = 1
@@ -50,22 +90,25 @@ Plug 'jelera/vim-javascript-syntax'
 
 Plug 'isRuslan/vim-es6'
 
-Plug 'leafgarland/typescript-vim'
+" Plug 'leafgarland/typescript-vim'
 
 " Plug 'Quramy/tsuquyomi'
 
 " Typescript syntax
 Plug 'HerringtonDarkholme/yats.vim'
 
-Plug 'mhartington/nvim-typescript', {'build': './install.sh'}
+" Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
 
 " For async completion
-Plug 'Shougo/deoplete.nvim'
+" Plug 'Shougo/deoplete.nvim'
 
 " Plug 'mhartington/deoplete-typescript'
 
 " For Denite features
 " Plug 'Shougo/denite.nvim'
+
+Plug 'othree/html5.vim'
+Plug 'cakebaker/scss-syntax.vim'
 
 " Color scheme
 Plug 'dracula/vim'
@@ -144,10 +187,13 @@ let NERDTreeMinimalUI = 1
 :nnoremap <leader>k :wincmd k<CR>
 :nnoremap <leader>h :wincmd h<CR>
 :nnoremap <leader>l :wincmd l<CR>
+
 " last used buffer
 nnoremap <leader>p :w<CR>:b #<CR>
 
 map <C-\> :NERDTreeToggle<CR>
+:nnoremap <leader>f :NERDTreeFind<CR>
+
 
 " Use CTRL-S for saving, also in Insert mode
 noremap <C-S> :update<CR>
@@ -156,7 +202,7 @@ inoremap <C-S> <C-O>:update<CR><Paste>
 
 " Keep selection when changing indentation
 vnoremap > >gv
-vnoremap < <
+vnoremap < <gv
 noremap <Tab> >>_
 nnoremap <S-Tab> <<_
 inoremap <S-Tab> <C-D>
@@ -184,7 +230,7 @@ nnoremap tj  :tabprev<CR>
 
 " switch buffers
 " fuzzy search buffer
-" nnoremap  b :Buffers<CR>
+"nnoremap <C-t> :Buffers<CR>
 
 noremap <C-_> :NERDTreeToggle<CR>
 
@@ -207,3 +253,18 @@ noremap <C-p> :call CtrlPCommand() <CR>
 
 " Search selected text
 vnoremap // y/<C-R>"<CR>
+
+command! CloseHiddenBuffers call s:CloseHiddenBuffers()
+function! s:CloseHiddenBuffers()
+  let open_buffers = []
+
+  for i in range(tabpagenr('$'))
+    call extend(open_buffers, tabpagebuflist(i + 1))
+  endfor
+
+  for num in range(1, bufnr("$") + 1)
+    if buflisted(num) && index(open_buffers, num) == -1
+      exec "bdelete ".num
+    endif
+  endfor
+endfunction

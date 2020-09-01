@@ -10,10 +10,12 @@ readonly BREW_PACKAGES=(
   python
   python3
   tree
-  vim
+  nvim
   bat
   ack
   zsh
+  ffmpeg
+  gifsicle
 )
 
 readonly HOMEBREW_CASKS=(
@@ -25,7 +27,6 @@ readonly HOMEBREW_CASKS=(
   spotify
   tower
   virtualbox
-  franz
   font-dejavu-sans
   font-dejavusansmono-nerd-font
 )
@@ -44,28 +45,27 @@ readonly CONFIG_FILES=(
   .gitconfig
   .vimrc
   .vim
+  .local-env
 )
 
 readonly VSCODE_EXTENSIONS=(
   Angular.ng-template
+  bierner.markdown-preview-github-styles
   christian-kohler.npm-intellisense
   christian-kohler.path-intellisense
   CoenraadS.bracket-pair-colorizer-2
-  dariofuzinato.vue-peek
-  dbaeumer.vscode-eslint
+  dawhite.mustache
+  dracula-theme.theme-dracula
+  eamodio.gitlens
   eg2.vscode-npm-script
-  esbenp.prettier-vscode
-  formulahendry.auto-close-tag
-  formulahendry.auto-rename-tag
   glen-84.sass-lint
-  mubaidr.vuejs-extension-pack
-  octref.vetur
+  Gruntfuggly.todo-tree
+  mechatroner.rainbow-csv
+  ms-vscode.vscode-typescript-tslint-plugin
   rbbit.typescript-hero
   robinbentley.sass-indented
   shd101wyy.markdown-preview-enhanced
-  tombonnike.vscode-status-bar-format-toggle
-  vscodevim.vim
-  tinkertrain.theme-panda
+  sleistner.vscode-fileutils
 )
 
 readonly VSCODE_CONFIG_FILES=(
@@ -73,6 +73,10 @@ readonly VSCODE_CONFIG_FILES=(
   keybindings.json
   snippets
 )
+
+function install_rust {
+  curl https://sh.rustup.rs -sSf
+}
 
 function install_homebrew {
   if test ! $(command -v brew); then
@@ -180,5 +184,6 @@ install_fzf
 configure_system
 link_config_files
 configure_vscode
+install_rust
 
 echo "Bootstrapping complete"

@@ -36,7 +36,7 @@ ZSH_THEME="robbyrussell"
 # DISABLE_AUTO_TITLE="true"
 
 # Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
+ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
 # COMPLETION_WAITING_DOTS="true"
@@ -101,20 +101,37 @@ CDPATH=.
 CDPATH=$CDPATH:$HOME/Code
 export CDPATH
 
-alias v=vim
+alias vim=nvim
+alias v=nvim
+alias c=code
 alias tower=gittower
-alias cat=bat
 alias zshreload="source ~/.zshrc"
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
 export PATH=$PATH:/Applications/Sketch.app/Contents/Resources/sketchtool/bin/sketchtool:/Applications/Sketch.app/Contents/Resources/sketchtool/bin/:/Applications/Sketch.app/Contents/Resources/sketchtool/bin/
 
+export PATH="/usr/local/lib/node_modules:$PATH"
 
-# local newline=$'\n'
-# local ret_status="%(?:%{$fg_bold[green]%}λ :%{$fg_bold[red]%}λ )"
+export NODE_OPTIONS=--max_old_space_size=8192
 
-export PS1="%{$fg[cyan]%}%c%{$reset_color%} $(git_prompt_info)${newline}%{$fg[red]%}${ret_status}%{$reset_color%} "
+source $(brew --prefix nvm)/nvm.sh
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+export BAT_THEME="Dracula"
+
+function mov2gif {
+  infile=$1
+  outfile="${infile%.*}.gif"
+  ffmpeg -i ${infile} -pix_fmt rgb8 -r 10 -f gif - | gifsicle --optimize=3 --delay=3 > ${outfile}
+}
+
+source $HOME/.cargo/env
+
+local newline=$'\n'
+local ret_status="%(?:%{$fg_bold[green]%}λ :%{$fg_bold[red]%}λ )"
+
+export PS1='%{$fg[cyan]%}%c%{$reset_color%} $(git_prompt_info)${newline}%{$fg[red]%}${ret_status}%{$reset_color%} '
+
+export PATH=$(npm config get prefix)/bin:$PATH
+
+source ./.local-env
