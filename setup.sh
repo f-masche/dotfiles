@@ -38,9 +38,7 @@ readonly NPM_PACKAGES=(
 readonly CONFIG_FILES=(
   .zshrc
   .gitconfig
-  .vimrc
-  .vim
-  #.local-env
+  .local-env
 )
 
 
@@ -125,7 +123,7 @@ function install_global_npm {
 
 function configure_sublime {
   echo "Configuring sublime..."
-  cp -rf "sublime/*" "${HOME}/Library/Application Support/Sublime Text/Packages/User/"
+  cp -rf ./sublime/* "${HOME}/Library/Application Support/Sublime Text/Packages/User/"
 }
 
 function configure_system {

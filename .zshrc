@@ -123,6 +123,8 @@ source $(brew --prefix nvm)/nvm.sh
 # Init fzf
 source ~/.fzf.zsh
 
+source ~/.local-env
+
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 export BAT_THEME="Dracula"
