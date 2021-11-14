@@ -76,11 +76,11 @@ source $ZSH/oh-my-zsh.sh
 # export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-export EDITOR='nvim'
-# else
-#   export EDITOR='mvim'
-# fi
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='subl'
+else
+  export EDITOR='vim'
+fi
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -107,13 +107,21 @@ alias c=code
 alias tower=gittower
 alias zshreload="source ~/.zshrc"
 
-export PATH=$PATH:/Applications/Sketch.app/Contents/Resources/sketchtool/bin/sketchtool:/Applications/Sketch.app/Contents/Resources/sketchtool/bin/:/Applications/Sketch.app/Contents/Resources/sketchtool/bin/
+# Add sublime text cli command
+export PATH=$PATH:/Applications/Sublime\ Text.app/Contents/SharedSupport/bin
 
 export PATH="/usr/local/lib/node_modules:$PATH"
 
 export NODE_OPTIONS=--max_old_space_size=8192
 
+# Init rust env
+source $HOME/.cargo/env
+
+# Init node version manager
 source $(brew --prefix nvm)/nvm.sh
+
+# Init fzf
+source ~/.fzf.zsh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
@@ -125,8 +133,6 @@ function mov2gif {
   ffmpeg -i ${infile} -pix_fmt rgb8 -r 10 -f gif - | gifsicle --optimize=3 --delay=3 > ${outfile}
 }
 
-source $HOME/.cargo/env
-
 local newline=$'\n'
 local ret_status="%(?:%{$fg_bold[green]%}λ :%{$fg_bold[red]%}λ )"
 
@@ -134,4 +140,3 @@ export PS1='%{$fg[cyan]%}%c%{$reset_color%} $(git_prompt_info)${newline}%{$fg[re
 
 export PATH=$(npm config get prefix)/bin:$PATH
 
-source ./.local-env

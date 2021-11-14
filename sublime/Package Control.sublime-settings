@@ -1,0 +1,18 @@
+{
+  "bootstrapped": false,
+  "installed_packages":
+  [
+    "Dracula Color Scheme",
+    "JsPrettier",
+    "JSX",
+    "Package Control",
+    "SideBarEnhancements",
+    "LSP",
+    "LSP-typescript",
+    "SublimeLinter",
+    "SublimeLinter-eslint"
+  ],
+  "in_process_packages":
+  [
+  ],
+}

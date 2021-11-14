@@ -14,9 +14,6 @@ Plug 'jiangmiao/auto-pairs'
 " Ack search
 Plug 'mileszs/ack.vim'
 
-" Git
-Plug 'tpope/vim-fugitive'
-
 " Nerd commenter
 Plug 'scrooloose/nerdcommenter'
 
@@ -63,22 +60,6 @@ let g:prettier#config#trailing_comma = 'all'
 let g:prettier#config#config_precedence = 'prefer-file'
 let g:prettier#config#prose_wrap = 'preserve'
 
-" NERD Tree
-Plug 'scrooloose/nerdtree'
-let NERDTreeWinSize=32
-
-" Linting
-" Plug 'w0rp/ale'
-" let g:ale_linters = {
-" \   'javascript': ['eslint'],
-" \   'typescript': ['tslint'],
-" \}
-" let g:airline#extensions#ale#enables = 1
-" let g:ale_lint_delay = 500
-
-" Only run linters named in ale_linters settings.
-let g:ale_linters_explicit = 1
-
 " Vim surround
 Plug 'tpope/vim-surround'
 
@@ -90,22 +71,8 @@ Plug 'jelera/vim-javascript-syntax'
 
 Plug 'isRuslan/vim-es6'
 
-" Plug 'leafgarland/typescript-vim'
-
-" Plug 'Quramy/tsuquyomi'
-
 " Typescript syntax
 Plug 'HerringtonDarkholme/yats.vim'
-
-" Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
-
-" For async completion
-" Plug 'Shougo/deoplete.nvim'
-
-" Plug 'mhartington/deoplete-typescript'
-
-" For Denite features
-" Plug 'Shougo/denite.nvim'
 
 Plug 'othree/html5.vim'
 Plug 'cakebaker/scss-syntax.vim'
@@ -175,11 +142,6 @@ let mapleader=' '
 
 let g:deoplete#enable_at_startup = 1
 
-" Auto cd into root directory of NERDTree
-let NERDTreeChDirMode = 2
-let NERDTreeMarkBookmarks = 0
-let NERDTreeMinimalUI = 1
-
 " Split and window movements
 :nnoremap <leader>v :vsplit<CR>
 :nnoremap <leader>i :split<CR>
@@ -190,10 +152,6 @@ let NERDTreeMinimalUI = 1
 
 " last used buffer
 nnoremap <leader>p :w<CR>:b #<CR>
-
-map <C-\> :NERDTreeToggle<CR>
-:nnoremap <leader>f :NERDTreeFind<CR>
-
 
 " Use CTRL-S for saving, also in Insert mode
 noremap <C-S> :update<CR>
@@ -236,18 +194,6 @@ noremap <C-_> :NERDTreeToggle<CR>
 
 command! -bang -nargs=? -complete=dir GFiles
   \ call fzf#vim#gitfiles(<q-args>, fzf#vim#with_preview(), <bang>0)
-
-" Do not open ctrl p buffer in nerd tree
-function! CtrlPCommand()
-    let c = 0
-    let wincount = winnr('$')
-    " Don't open it here if current buffer is not writable (e.g. NERDTree)
-    while !empty(getbufvar(+expand("<abuf>"), "&buftype")) && c < wincount
-        exec 'wincmd w'
-        let c = c + 1
-    endwhile
-    exec 'GFiles'
-endfunction
 
 noremap <C-p> :call CtrlPCommand() <CR>
 

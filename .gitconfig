@@ -1,6 +1,5 @@
 [user]
 	name = Fabian Maschewski
-	email = f.maschewski@mail.de
 [alias]
     st = status
     s = status -sb
