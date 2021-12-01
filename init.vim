@@ -8,82 +8,34 @@ Plug 'nathanaelkane/vim-indent-guides'
 let g:indent_guides_enable_on_vim_startup=1 " enable indentation guides on startup
 let g:indent_guides_auto_colors=0 " disable autodiscovery of guide colors to fix colorscheme definition
 
+"File tree
+Plug 'kyazdani42/nvim-web-devicons' " for file icons
+Plug 'kyazdani42/nvim-tree.lua'
+
 " Auto close brackets and quotes
 Plug 'jiangmiao/auto-pairs'
-
-" Ack search
-Plug 'mileszs/ack.vim'
 
 " Nerd commenter
 Plug 'scrooloose/nerdcommenter'
 
-" FZF fuzzy file search
-Plug '/usr/local/opt/fzf'
-Plug 'junegunn/fzf.vim'
-
-" Airline
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-let g:airline#extensions#tabline#enabled = 1 " Enable the list of buffers
-let g:airline#extensions#tabline#fnamemod = ':t' " Show just the filename
-
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-
-" Prettier code formatting
-Plug 'prettier/vim-prettier', {
-  \ 'do': 'yarn install',
-  \ 'branch': 'release/1.x',
-  \ 'for': [
-    \ 'javascript',
-    \ 'typescript',
-    \ 'css',
-    \ 'less',
-    \ 'scss',
-    \ 'json',
-    \ 'graphql',
-    \ 'markdown',
-    \ 'vue',
-    \ 'lua',
-    \ 'php',
-    \ 'python',
-    \ 'ruby',
-    \ 'html',
-    \ 'swift' ] }
-let g:prettier#exec_cmd_async = 1
-let g:prettier#autoformat = 1
-let g:prettier#autoformat_require_pragma = 0
-let g:prettier#config#single_quote = 'true'
-let g:prettier#config#bracket_spacing = 'false'
-let g:prettier#config#jsx_bracket_same_line = 'true'
-let g:prettier#config#arrow_parens = 'avoid'
-let g:prettier#config#trailing_comma = 'all'
-let g:prettier#config#config_precedence = 'prefer-file'
-let g:prettier#config#prose_wrap = 'preserve'
 
 " Vim surround
 Plug 'tpope/vim-surround'
 
-" Javascript
-Plug 'pangloss/vim-javascript' " extended javascript support
-let javascript_enable_domhtmlcss=1 " enable HTML/CSS syntax highlighting
-
-Plug 'jelera/vim-javascript-syntax'
-
-Plug 'isRuslan/vim-es6'
+" Fuzzy search
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
 
 " Typescript syntax
 Plug 'HerringtonDarkholme/yats.vim'
-
+Plug 'maxmellon/vim-jsx-pretty'
 Plug 'othree/html5.vim'
 Plug 'cakebaker/scss-syntax.vim'
 
 " Color scheme
 Plug 'dracula/vim'
 let g:dracula_italic = 1
-
-" Dev icons
-Plug 'ryanoasis/vim-devicons'
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 
 call plug#end()
 filetype plugin indent on  " required
@@ -140,16 +92,25 @@ endif
 
 let mapleader=' '
 
-let g:deoplete#enable_at_startup = 1
+lua <<EOF
+require'nvim-tree'.setup {
+  view = {
+    auto_resize = true
+    }
+  }
+EOF
 
 " Split and window movements
-:nnoremap <leader>v :vsplit<CR>
-:nnoremap <leader>i :split<CR>
-:nnoremap <leader>j :wincmd j<CR>
-:nnoremap <leader>k :wincmd k<CR>
-:nnoremap <leader>h :wincmd h<CR>
-:nnoremap <leader>l :wincmd l<CR>
+nnoremap <leader>v :vnew<CR>
+nnoremap <leader>i :new<CR>
+nnoremap <leader>j :wincmd j<CR>
+nnoremap <leader>k :wincmd k<CR>
+nnoremap <leader>h :wincmd h<CR>
+nnoremap <leader>l :wincmd l<CR>
 
+nnoremap <leader>tt :NvimTreeToggle<CR>
+nnoremap <leader>tr :NvimTreeRefresh<CR>
+nnoremap <leader>tf :NvimTreeFindFile<CR>
 " last used buffer
 nnoremap <leader>p :w<CR>:b #<CR>
 
@@ -168,10 +129,7 @@ vnoremap <Tab> >gv
 vnoremap <S-Tab> <gv
 
 " Remove highlighing after search
- nnoremap <esc> :noh<return><esc>
-
-" Search for line
-nnoremap <C-l> :CtrlPLine<CR>
+nnoremap <esc> :noh<return><esc>
 
 " Show cursorline only in active window
 augroup CursorLine
@@ -186,31 +144,41 @@ augroup END
 nnoremap tk  :tabnext<CR>
 nnoremap tj  :tabprev<CR>
 
-" switch buffers
-" fuzzy search buffer
-"nnoremap <C-t> :Buffers<CR>
-
-noremap <C-_> :NERDTreeToggle<CR>
-
-command! -bang -nargs=? -complete=dir GFiles
-  \ call fzf#vim#gitfiles(<q-args>, fzf#vim#with_preview(), <bang>0)
-
-noremap <C-p> :call CtrlPCommand() <CR>
-
 " Search selected text
 vnoremap // y/<C-R>"<CR>
 
-command! CloseHiddenBuffers call s:CloseHiddenBuffers()
-function! s:CloseHiddenBuffers()
-  let open_buffers = []
+" Symbol renaming.
+nmap <leader>rn <Plug>(coc-rename)
 
-  for i in range(tabpagenr('$'))
-    call extend(open_buffers, tabpagebuflist(i + 1))
-  endfor
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
 
-  for num in range(1, bufnr("$") + 1)
-    if buflisted(num) && index(open_buffers, num) == -1
-      exec "bdelete ".num
-    endif
-  endfor
-endfunction
+" Use `[g` and `]g` to navigate diagnostics
+" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" Remap keys for applying codeAction to the current buffer.
+nmap <leader>ac  <Plug>(coc-codeaction)
+
+" Add `:Format` command to format current buffer.
+command! -nargs=0 Format :call CocAction('format')
+
+" Add `:Fold` command to fold current buffer.
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+" Add `:OR` command for organize imports of the current buffer.
+command! -nargs=0 OrganizeImport   :call     CocAction('runCommand', 'editor.action.organizeImport')
+
+command! -nargs=0 Prettier :CocCommand prettier.formatFile
+
+command! -nargs=0 Refresh :source $MYVIMRC
+
+" Find files using Telescope command-line sugar.
+nnoremap <leader>ff <cmd>Telescope find_files theme=dropdown<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep theme=dropdown<cr>
+nnoremap <leader>fb <cmd>Telescope buffers theme=dropdown<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags theme=dropdown<cr>
