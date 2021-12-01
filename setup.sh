@@ -112,7 +112,9 @@ function setup_vim {
   curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   pip3 install neovim
   local initVimFile="${HOME}/.config/nvim/init.vim"
-  rm $initVimFile
+  if ! [ -e $initVimFile ]; then
+    rm $initVimFile
+  fi
   ln -s "${PWD}/init.vim" $initVimFile
 }
 
@@ -140,6 +142,9 @@ function configure_system {
   # Enable tap-to-click
   defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
   defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
+
+  # Disable mouse acceleration
+  defaults write -g com.apple.mouse.scaling -integer -1
 }
 
 function link_config_files {

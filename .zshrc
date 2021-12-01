@@ -112,6 +112,8 @@ export PATH=$PATH:/Applications/Sublime\ Text.app/Contents/SharedSupport/bin
 
 export PATH="/usr/local/lib/node_modules:$PATH"
 
+export PATH="/opt/homebrew/bin:$PATH"
+
 export NODE_OPTIONS=--max_old_space_size=8192
 
 # Init rust env
