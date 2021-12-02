@@ -112,9 +112,8 @@ function setup_vim {
   curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   pip3 install neovim
   local initVimFile="${HOME}/.config/nvim/init.vim"
-  if ! [ -e $initVimFile ]; then
-    rm $initVimFile
-  fi
+  
+  rm -f $initVimFile
   ln -s "${PWD}/init.vim" $initVimFile
 }
 
@@ -134,8 +133,9 @@ function configure_system {
   defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
 
   # Set fast key repeat rate
-  defaults write NSGlobalDomain KeyRepeat -int 0
-
+  defaults write -g KeyRepeat -int 4
+  defaults write -g InitialKeyRepeat -int 25
+             
   # Show the ~/Library folder
   chflags nohidden ~/Library
 
@@ -151,10 +151,9 @@ function link_config_files {
   echo "Linking config..."
   for file in "${CONFIG_FILES[@]}"
   do
-    if ! [ -e "${HOME}/${file}" ]; then
-      echo "Linking ${file}"
-      ln -s "${PWD}/${file}" "${HOME}/${file}"
-    fi
+    echo "Linking ${file}"
+    rm -f "${HOME}/${file}"
+    ln -s "${PWD}/${file}" "${HOME}/${file}"
   done
 }
 

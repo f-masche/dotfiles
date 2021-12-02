@@ -80,7 +80,8 @@ set pumheight=5 " set height of popup
 set colorcolumn=80
 set splitbelow " split below of current window
 set splitright " split right of current window
-" In many terminal emulators the mouse works just fine, thus enable it.
+set iskeyword+=- " Treat - as part of a word
+
 if has('mouse')
 set mouse=a
 endif
@@ -100,17 +101,26 @@ require'nvim-tree'.setup {
   }
 EOF
 
+" Navigate completion list
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
 " Split and window movements
-nnoremap <leader>v :vnew<CR>
-nnoremap <leader>i :new<CR>
+nnoremap <leader>v :vspl<CR>
+nnoremap <leader>x :sp<CR>
+nnoremap <leader>te :tabedit<CR>
 nnoremap <leader>j :wincmd j<CR>
 nnoremap <leader>k :wincmd k<CR>
 nnoremap <leader>h :wincmd h<CR>
 nnoremap <leader>l :wincmd l<CR>
+nnoremap <leader>= :wincmd =<CR>
+nnoremap <leader>+ :vert res \| res<CR>
 
 nnoremap <leader>tt :NvimTreeToggle<CR>
 nnoremap <leader>tr :NvimTreeRefresh<CR>
 nnoremap <leader>tf :NvimTreeFindFile<CR>
+
 " last used buffer
 nnoremap <leader>p :w<CR>:b #<CR>
 
@@ -120,13 +130,12 @@ vnoremap <C-S> <C-C>:update<CR>
 inoremap <C-S> <C-O>:update<CR><Paste>
 
 " Keep selection when changing indentation
-vnoremap > >gv
-vnoremap < <gv
-noremap <Tab> >>_
-nnoremap <S-Tab> <<_
-inoremap <S-Tab> <C-D>
-vnoremap <Tab> >gv
-vnoremap <S-Tab> <gv
+"vnoremap > >gv
+"vnoremap < <gv
+"noremap <Tab> >>_
+"nnoremap <S-Tab> <<_
+"vnoremap <Tab> >gv
+"vnoremap <S-Tab> <gv
 
 " Remove highlighing after search
 nnoremap <esc> :noh<return><esc>
@@ -158,11 +167,17 @@ nmap <silent> gr <Plug>(coc-references)
 
 " Use `[g` and `]g` to navigate diagnostics
 " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
+nmap <silent> g# <Plug>(coc-diagnostic-prev)
 
 " Remap keys for applying codeAction to the current buffer.
 nmap <leader>ac  <Plug>(coc-codeaction)
+
+" Symbol renaming.
+nmap <leader>rn <Plug>(coc-rename)
+
+" Formatting selected code.
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
 
 " Add `:Format` command to format current buffer.
 command! -nargs=0 Format :call CocAction('format')
@@ -176,6 +191,8 @@ command! -nargs=0 OrganizeImport   :call     CocAction('runCommand', 'editor.act
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
 
 command! -nargs=0 Refresh :source $MYVIMRC
+
+autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Find files using Telescope command-line sugar.
 nnoremap <leader>ff <cmd>Telescope find_files theme=dropdown<cr>
